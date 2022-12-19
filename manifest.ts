@@ -1,6 +1,6 @@
 
-export interface ManifestPlugin<TOut, TIn extends Manifest<any>> {
-    ( e: TIn ): TOut;
+export interface ManifestPlugin<T extends {},B> {
+    ( e: Manifest<T> ): B;
 }
 
 
@@ -9,7 +9,7 @@ export interface ManifestPlugin<TOut, TIn extends Manifest<any>> {
 export class Manifest<T extends {}> {
     resources:T = {} as T;
 
-    plugin<B>( plugin: ManifestPlugin<B, this> ) {
-        return plugin( this ) as this & B;
+    plugin<B extends Manifest<T>>( plugin:ManifestPlugin<T,B> ) {
+        return plugin( this );
     }
 }

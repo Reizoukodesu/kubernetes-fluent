@@ -8,9 +8,9 @@ import { Builder } from "./builder";
 export function Ingress( manifest:Manifest<{}> ) {
 
     return Object.assign( manifest, {
-        ingress: <R extends string, Y extends ReturnType<IngressBuilder['assign']>>(name: R, build: ( builder:IngressBuilder ) => Y ) => {
-            let config = build( new IngressBuilder() );
-            return _.merge(manifest, { resources: { ingresses: { [name]: config } as Record<R, Y>  } })
+        ingress: <R extends string, Y extends IngressBuilder>(name: R, build: ( builder:IngressBuilder ) => Y ) => {
+            let config = build( new IngressBuilder() ).config;
+            return _.merge(manifest, { resources: { ingresses: { [name]: config } as Record<R, Y['config']>  } })
         }
     })
 }
