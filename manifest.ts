@@ -1,15 +1,15 @@
 
-export interface ManifestPlugin<T extends {},B> {
-    ( e: Manifest<T> ): B;
+export interface ManifestPlugin<T,B> {
+    ( e: T ): B;
 }
 
 
 
 
-export class Manifest<T extends {}> {
-    resources:T = {} as T;
+export class Manifest {
+    resources:{} = {};
 
-    plugin<B extends Manifest<T>>( plugin:ManifestPlugin<T,B> ) {
-        return plugin( this );
+    plugin<B extends Manifest>( plugin:ManifestPlugin<this,B> ) {
+        return plugin( this ) as this & B;
     }
 }
